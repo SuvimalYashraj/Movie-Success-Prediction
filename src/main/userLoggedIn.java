@@ -5,6 +5,20 @@
  */
 package main;
 
+import Matrix.Matrix;
+import Matrix.MultiLinear;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author MAHE
@@ -17,6 +31,44 @@ public class userLoggedIn extends javax.swing.JFrame {
     public userLoggedIn() {
         initComponents();
     }
+    String arr[] = {"SHAH_RUKH_KHAN", "AAMIR_KHAN", "SALMAN_KHAN", "AKSHAY_KUMAR", "KATRINA_KAIF", "KAJOL_DEVGAN", "KAREENA_KAPOOR", "PRIYANKA_CHOPRA", "YASH_RAJ_CHOPRA", "RAJ_KUMAR_HIRANI", "IMTIAZ_ALI", "SANJAY_LEELA_BHANSALI", "VISHAL_SHEKHAR", "PRITAM", "AR_REHMAN", "SHANKAR_EHSAN_LOY", "BELOW_50_MILLION", "50_TO_100_MILLION", "100_TO_150_MILLION", "ABOVE_150_MILLION", "ACTION", "ROMANCE", "COMEDY", "DRAMA", "CHRISTMAS", "DIWALI", "EID", "HOLI"
+    };
+    double avg[] = new double[28];
+    Connection con = null;
+    Statement st = null;
+    ResultSet rs1 = null;
+    ResultSet rs2 = null;
+//        ResultSet rs3 = null;
+//        ResultSet rs4 = null;
+//        ResultSet rs5 = null;
+//        ResultSet rs6 = null;
+//        ResultSet rs7 = null;
+//        ResultSet rs8 = null;
+//        ResultSet rs9 = null;
+//        ResultSet rs10 = null;
+//        ResultSet rs11 = null;
+//        ResultSet rs12 = null;
+//        ResultSet rs13 = null;
+//        ResultSet rs14 = null;
+//        ResultSet rs15 = null;
+//        ResultSet rs16 = null;
+//        ResultSet rs17 = null;
+//        ResultSet rs18 = null;
+//        ResultSet rs19 = null;
+//        ResultSet rs20 = null;
+//        ResultSet rs21 = null;
+//        ResultSet rs22 = null;
+//        ResultSet rs23 = null;
+//        ResultSet rs24 = null;
+//        ResultSet rs25 = null;
+//        ResultSet rs26 = null;
+//        ResultSet rs27 = null;
+//        ResultSet rs28 = null;
+    ResultSet rs = null;
+
+    double av1, av2, av3, av4, av5, av6, av7, av8, av9, av10, av11, av12, av13, av14, av15, av16, av17, av18, av19, av20, av21, av22, av23;
+    double av24, av25, av26, av27, av28;
+    String s, mn = null;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -131,6 +183,11 @@ public class userLoggedIn extends javax.swing.JFrame {
 
         jLabel15.setIcon(new javax.swing.ImageIcon("C:\\Users\\MAHE\\Desktop\\predict.jpg")); // NOI18N
         jLabel15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel15MousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -227,18 +284,18 @@ public class userLoggedIn extends javax.swing.JFrame {
 
     private void jLabel12MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MousePressed
         searchMovie obj = new searchMovie();
-    obj.setVisible(true);
-    this.setVisible(false);// TODO add your handling code here:
+        obj.setVisible(true);
+        this.setVisible(false);// TODO add your handling code here:
     }//GEN-LAST:event_jLabel12MousePressed
 
     private void jLabel13MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MousePressed
-       review obj = new review();
-     obj.setVisible(true);
-     this.setVisible(false); // TODO add your handling code here:
+        review obj = new review();
+        obj.setVisible(true);
+        this.setVisible(false); // TODO add your handling code here:
     }//GEN-LAST:event_jLabel13MousePressed
 
     private void jLabel14MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MousePressed
-      userlogin obj = new userlogin();
+        userlogin obj = new userlogin();
         obj.setVisible(true);
         this.setVisible(false);  // TODO add your handling code here:
     }//GEN-LAST:event_jLabel14MousePressed
@@ -246,6 +303,151 @@ public class userLoggedIn extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jLabel15MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MousePressed
+
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/msp?autoReconnect=true&useSSL=false", "root", "suvimal");
+            Statement stmt = con.createStatement();
+
+            for (int i = 0; i < 28; i++) {
+                rs = stmt.executeQuery("select avg(RATING) as avg1 from predict where " + arr[i] + " = 1;");
+                rs.next();
+                avg[i] = rs.getDouble("avg1");
+                //System.out.println(avg[i]);
+            }
+
+//            Connection con = null;
+//            Statement st = null;
+//            ResultSet rs = null;
+//            String s;
+//connect your app to mysql database
+            //boolean autoReconnect;
+            //boolean useSSL = false;
+            //con = DriverManager.getConnection("jdbc:mysql://localhost:3306/msp?useSSL=false","root","suvimal");
+            // jdbc:mysql://localhost:3306/Peoples?autoReconnect=true&useSSL=false;
+            //       st = con.createStatement();
+            //       s = "select SA,SB,SC,SD from login.demo";
+            rs = stmt.executeQuery("select SHAH_RUKH_KHAN, AAMIR_KHAN, SALMAN_KHAN, AKSHAY_KUMAR, KATRINA_KAIF, "
+                    + "KAJOL_DEVGAN, KAREENA_KAPOOR, PRIYANKA_CHOPRA, YASH_RAJ_CHOPRA, RAJ_KUMAR_HIRANI, IMTIAZ_ALI,"
+                    + " SANJAY_LEELA_BHANSALI, VISHAL_SHEKHAR, PRITAM, AR_REHMAN, SHANKAR_EHSAN_LOY, "
+                    + "BELOW_50_MILLION, 50_TO_100_MILLION, 100_TO_150_MILLION, ABOVE_150_MILLION, ACTION, "
+                    + "ROMANCE, COMEDY, DRAMA, CHRISTMAS, DIWALI, EID, HOLI from predict");
+            ResultSetMetaData rsmt = rs.getMetaData();
+            Statement stmt1 = con.createStatement();
+            rs1 = stmt1.executeQuery("SELECT COUNT(*) AS total FROM predict");
+            int count = 0;
+            while (rs1.next()) {
+                count = rs1.getInt("total");
+            }
+            System.out.println(count);
+            Statement stmt2 = con.createStatement();
+            rs2 = stmt2.executeQuery("SELECT rating FROM predict");
+
+            String a = "";
+            int nCol = rs.getMetaData().getColumnCount();
+            double ar[][] = new double[count][nCol];
+            //System.out.println(rowNumb);
+            List<int[]> table = new ArrayList<>();
+            while (rs.next()) {
+                int[] row = new int[nCol];
+                for (int iCol = 2; iCol < nCol; iCol++) {
+                    a = rs.getObject(iCol).toString();
+                    row[iCol - 2] = Integer.parseInt(a);
+                }
+                table.add(row);
+            }
+
+            int nColy = rs2.getMetaData().getColumnCount();
+            double ary[][] = new double[count][nColy];
+            List<double[]> tabley = new ArrayList<>();
+            while (rs2.next()) {
+                double[] rowy = new double[nColy];
+                for (int iCol = 1; iCol <= nColy; iCol++) {
+                    a = rs2.getObject(iCol).toString();
+                    rowy[iCol - 1] = Double.parseDouble(a);
+                }
+                tabley.add(rowy);
+            }
+            int i = 0;
+            int j = 0;
+//// print result
+            for (int[] row : table) {
+                for (int si : row) {
+                    ar[i][j] = si;
+                    j++;
+                    
+                }
+                //System.out.println(j);
+                j = 0;
+                i++;
+
+            }
+           //System.out.println(j);
+
+            i = 0;
+            j = 0;
+// print result
+            for (double[] row : tabley) {
+                for (double si : row) {
+                    ary[i][j] = si;
+                    j++;
+                }
+                j = 0;
+                i++;
+
+            }
+
+//            for(i=0;i<count;i++)
+//            {
+//                for(j=0;j<nCol;j++)
+//                {
+//                    System.out.print(ar[i][j]+" ");
+//                }
+//                System.out.println();
+//            }
+//            for(i=0;i<count;i++)
+//            {
+//                for(j=0;j<nColy;j++)
+//                {
+//                    System.out.print(ary[i][j]+" ");
+//                }
+//                System.out.println();
+//            }
+          //  rs = stmt.executeQuery("select count(*) as cnt from predict;");
+           // rs.next();
+           // int cnt = rs.getInt("cnt");
+           //System.out.println(count);
+            for (i = 0; i < 28; i++) {
+                for (j = 0; j < count; j++) {
+                    if (ar[j][i] == 1) {
+                        ar[j][i] = avg[i];
+                    }
+                }
+            }
+            for (i = 0; i < 28; i++) {
+                for (j = 0; j < count; j++) {
+                    System.out.print(ar[j][i]+"    ");
+                }
+                System.out.println();
+            }
+            Matrix m = new Matrix(ar);
+//Matrix m2 = new Matrix(ary);
+//MultiLinear ml = new MultiLinear(m,m2);
+//Matrix result = ml.calculate();
+
+            update obj = new update();
+            obj.setVisible(true);
+            this.setVisible(false);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(userlogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(userlogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_jLabel15MousePressed
 
     /**
      * @param args the command line arguments
