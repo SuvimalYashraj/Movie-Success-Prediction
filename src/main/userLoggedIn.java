@@ -31,13 +31,21 @@ public class userLoggedIn extends javax.swing.JFrame {
     public userLoggedIn() {
         initComponents();
     }
-    String arr[] = {"SHAH_RUKH_KHAN", "AAMIR_KHAN", "SALMAN_KHAN", "AKSHAY_KUMAR", "KATRINA_KAIF", "KAJOL_DEVGAN", "KAREENA_KAPOOR", "PRIYANKA_CHOPRA", "YASH_RAJ_CHOPRA", "RAJ_KUMAR_HIRANI", "IMTIAZ_ALI", "SANJAY_LEELA_BHANSALI", "VISHAL_SHEKHAR", "PRITAM", "AR_REHMAN", "SHANKAR_EHSAN_LOY", "BELOW_50_MILLION", "50_TO_100_MILLION", "100_TO_150_MILLION", "ABOVE_150_MILLION", "ACTION", "ROMANCE", "COMEDY", "DRAMA", "CHRISTMAS", "DIWALI", "EID", "HOLI"
+    String arr[] = {"SHAH_RUKH_KHAN", "AAMIR_KHAN", "SALMAN_KHAN", "KATRINA_KAIF", "KAJOL_DEVGAN", "KAREENA_KAPOOR", "YASH_RAJ_CHOPRA", "RAJ_KUMAR_HIRANI", "IMTIAZ_ALI"
     };
+    String act = null;
+    String actr = null;
+    String dir = null;
     double avg[] = new double[28];
     Connection con = null;
     Statement st = null;
     ResultSet rs1 = null;
     ResultSet rs2 = null;
+    
+    double newRating;
+    int a1,a2,a3;
+int ac1,ac2,ac3;
+int d1,d2,d3;
 //        ResultSet rs3 = null;
 //        ResultSet rs4 = null;
 //        ResultSet rs5 = null;
@@ -66,8 +74,7 @@ public class userLoggedIn extends javax.swing.JFrame {
 //        ResultSet rs28 = null;
     ResultSet rs = null;
 
-    double av1, av2, av3, av4, av5, av6, av7, av8, av9, av10, av11, av12, av13, av14, av15, av16, av17, av18, av19, av20, av21, av22, av23;
-    double av24, av25, av26, av27, av28;
+    
     String s, mn = null;
 
     /**
@@ -89,9 +96,9 @@ public class userLoggedIn extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        actor = new javax.swing.JComboBox<>();
+        actress = new javax.swing.JComboBox<>();
+        director = new javax.swing.JComboBox<>();
         jComboBox4 = new javax.swing.JComboBox<>();
         jComboBox5 = new javax.swing.JComboBox<>();
         jComboBox6 = new javax.swing.JComboBox<>();
@@ -132,16 +139,16 @@ public class userLoggedIn extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Perpetua Titling MT", 1, 14)); // NOI18N
         jLabel9.setText("RELEASE TIME");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SHAH RUKH KHAN", "AAMIR KHAN", "SALMAN KHAN", "AKSHAY KUMAR" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        actor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SHAH RUKH KHAN", "AAMIR KHAN", "SALMAN KHAN", "AKSHAY KUMAR" }));
+        actor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                actorActionPerformed(evt);
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "KAJOL DEVGN", "KATRINA KAIF", "KAREENA KAAPOOR", "PRIYANKA CHOPRA" }));
+        actress.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "KAJOL DEVGN", "KATRINA KAIF", "KAREENA KAAPOOR", "PRIYANKA CHOPRA" }));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "YASH CHOPRA", "RAJ KUMAR HIRANI", "IMTIAZ ALI", "SANJAY LEELA BHANSALI" }));
+        director.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "YASH CHOPRA", "RAJ KUMAR HIRANI", "IMTIAZ ALI", "SANJAY LEELA BHANSALI" }));
 
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "VISHAL SHEKHAR", "AR REHMAN", "PRITAM", "SHANKAR EHSAN LOY" }));
 
@@ -216,9 +223,9 @@ public class userLoggedIn extends javax.swing.JFrame {
                             .addComponent(jLabel9))
                         .addGap(74, 74, 74)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(director, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(actress, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(actor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jComboBox5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jComboBox6, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -249,15 +256,15 @@ public class userLoggedIn extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(actor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(actress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(director, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -300,9 +307,9 @@ public class userLoggedIn extends javax.swing.JFrame {
         this.setVisible(false);  // TODO add your handling code here:
     }//GEN-LAST:event_jLabel14MousePressed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void actorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_actorActionPerformed
 
     private void jLabel15MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MousePressed
 
@@ -310,8 +317,8 @@ public class userLoggedIn extends javax.swing.JFrame {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/msp?autoReconnect=true&useSSL=false", "root", "suvimal");
             Statement stmt = con.createStatement();
             System.out.println("AVERAGE :-");
-            for (int i = 0; i < 28; i++) {
-                rs = stmt.executeQuery("select avg(RATING) as avg1 from predict where " + arr[i] + " = 1;");
+            for (int i = 0; i < 9; i++) {
+                rs = stmt.executeQuery("select avg(RATING) as avg1 from msp.mlr where " + arr[i] + " = 1;");
                 rs.next();
                 avg[i] = rs.getDouble("avg1");
                 System.out.println(avg[i]);
@@ -328,21 +335,18 @@ public class userLoggedIn extends javax.swing.JFrame {
             // jdbc:mysql://localhost:3306/Peoples?autoReconnect=true&useSSL=false;
             //       st = con.createStatement();
             //       s = "select SA,SB,SC,SD from login.demo";
-            rs = stmt.executeQuery("select SHAH_RUKH_KHAN, AAMIR_KHAN, SALMAN_KHAN, AKSHAY_KUMAR, KATRINA_KAIF, "
-                    + "KAJOL_DEVGAN, KAREENA_KAPOOR, PRIYANKA_CHOPRA, YASH_RAJ_CHOPRA, RAJ_KUMAR_HIRANI, IMTIAZ_ALI,"
-                    + " SANJAY_LEELA_BHANSALI, VISHAL_SHEKHAR, PRITAM, AR_REHMAN, SHANKAR_EHSAN_LOY, "
-                    + "BELOW_50_MILLION, 50_TO_100_MILLION, 100_TO_150_MILLION, ABOVE_150_MILLION, ACTION, "
-                    + "ROMANCE, COMEDY, DRAMA, CHRISTMAS, DIWALI, EID, HOLI from predict");
+            rs = stmt.executeQuery("select SHAH_RUKH_KHAN,AAMIR_KHAN,SALMAN_KHAN,KATRINA_KAIF,KAJOL_DEVGAN,KAREENA_KAPOOR,"
+                    + "YASH_RAJ_CHOPRA,RAJ_KUMAR_HIRANI,IMTIAZ_ALI from msp.mlr;");
             ResultSetMetaData rsmt = rs.getMetaData();
             Statement stmt1 = con.createStatement();
-            rs1 = stmt1.executeQuery("SELECT COUNT(*) AS total FROM predict");
+            rs1 = stmt1.executeQuery("SELECT COUNT(*) AS total FROM msp.mlr");
             int count = 0;
             while (rs1.next()) {
                 count = rs1.getInt("total");
             }
             //System.out.println(count);
             Statement stmt2 = con.createStatement();
-            rs2 = stmt2.executeQuery("SELECT rating FROM predict");
+            rs2 = stmt2.executeQuery("SELECT rating FROM msp.mlr");
 
             String a = "";
             int nCol = rs.getMetaData().getColumnCount();
@@ -420,7 +424,7 @@ public class userLoggedIn extends javax.swing.JFrame {
            // rs.next();
            // int cnt = rs.getInt("cnt");
            System.out.println();
-            for (i = 0; i < 28; i++) {
+            for (i = 0; i < 9; i++) {
                 for (j = 0; j < count; j++) {
                     if (ar[j][i] == 1.0) {
                         ar[j][i] = avg[i];
@@ -428,18 +432,70 @@ public class userLoggedIn extends javax.swing.JFrame {
                     }
                 }
             }
-       for (i = 0; i < 28; i++) {
-                for (j = 0; j < count; j++) {
-                    System.out.print(ar[j][i]+"    ");
+       for (i = 0; i < count; i++) {
+                for (j = 0; j < 9; j++) {
+                    System.out.print(ar[i][j]+"\t");
                 }
                 System.out.println();
             }
     
             Matrix m = new Matrix(ar);
-//Matrix m2 = new Matrix(ary);
-//MultiLinear ml = new MultiLinear(m,m2);
-//Matrix result = ml.calculate();
+Matrix m2 = new Matrix(ary);
+MultiLinear ml = new MultiLinear(m,m2);
+Matrix result = ml.calculate();
+for(int i1 = 0;i1<result.getNrows();i1++)
+{
+    for(int j1=0;j1<result.getNcols();j1++)
+    {
+        System.out.print(result.getValueAt(i1, j1));
+    }
+    System.out.println();
+}
 
+     actr = actor.getSelectedItem().toString();
+     act = actress.getSelectedItem().toString();
+     dir = director.getSelectedItem().toString();
+     
+     switch(actr)
+     {case "SHAH RUKH KHAN" : a1=1;a2=a3=0;break;
+     case "SALMAN KHAN" : a1=a2=0;a3=1;break;
+     case "AAMIR KHAN" : a1=a3=0;a2=1;break;
+    // case "AKSHAY KUMAR" : a1=a2=a3=0;a4=1;break;
+     }
+     switch(act)
+     {case "KATRINA KAIF" : ac1=1;ac2=ac3=0;break;
+      case "KAJOL DEVGN" : ac1=ac3=0;ac2=1;break;
+      case "KAREENA KAPOOR" : ac1=ac2=0;ac3=1;break;
+      //case "PRIYANKA CHOPRA" : ac1=ac2=ac3=0;ac4=1;break;
+     }
+     switch(dir)
+     {case "YASH CHOPRA" : d1=1;d2=d3=0;break;
+      case "RAJ KUMAR HIRANI" : d1=d3=0;d2=1;break;
+      case "IMTIAZ ALI" : d1=d2=0;d3=1;break;
+      //case "SANJAY LEELA BHANSALI": d1=d2=d3=0;d4=1;break;
+     }
+     
+     double fin[] = {a1,a2,a3,ac1,ac2,ac3,d1,d2,d3};
+     
+     for(int y=0;y<9;y++)
+     {
+         if(fin[y]==1)
+         { fin[y]=avg[y];
+            System.out.println(fin[y]);
+         }
+     }
+//     for(int r=0;i<10;i++)
+//     {
+//         for(int s=0; s<1)
+//         newRating += Result 
+//     }
+            
+           newRating = result.getValueAt(0, 0);
+            for(i=1;i<result.getNrows();i++)
+            {
+                newRating += result.getValueAt(i, 0)*fin[i-1];
+            }
+            System.out.println("RATING = "+newRating);
             update obj = new update();
             obj.setVisible(true);
             this.setVisible(false);
@@ -489,10 +545,10 @@ public class userLoggedIn extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> actor;
+    private javax.swing.JComboBox<String> actress;
+    private javax.swing.JComboBox<String> director;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JComboBox<String> jComboBox6;
