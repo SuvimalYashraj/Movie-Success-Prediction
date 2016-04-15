@@ -309,12 +309,12 @@ public class userLoggedIn extends javax.swing.JFrame {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/msp?autoReconnect=true&useSSL=false", "root", "suvimal");
             Statement stmt = con.createStatement();
-
+            System.out.println("AVERAGE :-");
             for (int i = 0; i < 28; i++) {
                 rs = stmt.executeQuery("select avg(RATING) as avg1 from predict where " + arr[i] + " = 1;");
                 rs.next();
                 avg[i] = rs.getDouble("avg1");
-                //System.out.println(avg[i]);
+                System.out.println(avg[i]);
             }
 
 //            Connection con = null;
@@ -340,20 +340,20 @@ public class userLoggedIn extends javax.swing.JFrame {
             while (rs1.next()) {
                 count = rs1.getInt("total");
             }
-            System.out.println(count);
+            //System.out.println(count);
             Statement stmt2 = con.createStatement();
             rs2 = stmt2.executeQuery("SELECT rating FROM predict");
 
             String a = "";
             int nCol = rs.getMetaData().getColumnCount();
             double ar[][] = new double[count][nCol];
-            //System.out.println(rowNumb);
+            System.out.println(nCol);
             List<int[]> table = new ArrayList<>();
             while (rs.next()) {
                 int[] row = new int[nCol];
-                for (int iCol = 2; iCol < nCol; iCol++) {
+                for (int iCol = 1; iCol <= nCol; iCol++) {
                     a = rs.getObject(iCol).toString();
-                    row[iCol - 2] = Integer.parseInt(a);
+                    row[iCol - 1] = Integer.parseInt(a);
                 }
                 table.add(row);
             }
@@ -397,40 +397,44 @@ public class userLoggedIn extends javax.swing.JFrame {
                 i++;
 
             }
+            System.out.println("MATRIX FROM DB:-");
 
-//            for(i=0;i<count;i++)
-//            {
-//                for(j=0;j<nCol;j++)
-//                {
-//                    System.out.print(ar[i][j]+" ");
-//                }
-//                System.out.println();
-//            }
-//            for(i=0;i<count;i++)
-//            {
-//                for(j=0;j<nColy;j++)
-//                {
-//                    System.out.print(ary[i][j]+" ");
-//                }
-//                System.out.println();
-//            }
+            for(i=0;i<count;i++)
+            {
+                for(j=0;j<nCol;j++)
+                {
+                    System.out.print(ar[i][j]+" ");
+                }
+                System.out.println();
+            }
+            System.out.println("RATING:-");
+            for(i=0;i<count;i++)
+            {
+                for(j=0;j<nColy;j++)
+                {
+                    System.out.print(ary[i][j]+" ");
+                }
+                System.out.println();
+            }
           //  rs = stmt.executeQuery("select count(*) as cnt from predict;");
            // rs.next();
            // int cnt = rs.getInt("cnt");
-           //System.out.println(count);
+           System.out.println();
             for (i = 0; i < 28; i++) {
                 for (j = 0; j < count; j++) {
-                    if (ar[j][i] == 1) {
+                    if (ar[j][i] == 1.0) {
                         ar[j][i] = avg[i];
+                        //System.out.println(ar[j][i]);
                     }
                 }
             }
-            for (i = 0; i < 28; i++) {
+       for (i = 0; i < 28; i++) {
                 for (j = 0; j < count; j++) {
                     System.out.print(ar[j][i]+"    ");
                 }
                 System.out.println();
             }
+    
             Matrix m = new Matrix(ar);
 //Matrix m2 = new Matrix(ary);
 //MultiLinear ml = new MultiLinear(m,m2);
