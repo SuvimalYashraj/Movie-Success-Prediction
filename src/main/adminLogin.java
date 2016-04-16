@@ -358,7 +358,7 @@ double r;
             try
             {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/msp?autoReconnect=true&useSSL=false","root", "suvimal");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/msp?autoReconnect=true&useSSL=false","root", "suvimal");
             statement = conn.createStatement();
             String in = "insert into msp.predict values('"+mn+"',"+a1+","+a2+","+a3+","+a4+","+ac1+","+ac2+","+ac3+","+ac4+","+d1+","+d2+","+d3+","+d4+","+m1+","+m2+","+m3+","+m4+","+b1+","+b2+","+b3+","+b4+","+g1+","+g2+","+g3+","+g4+","+r1+","+r2+","+r3+","+r4+","+r+");";
             statement.executeUpdate(in);
