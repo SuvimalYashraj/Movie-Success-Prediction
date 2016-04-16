@@ -138,11 +138,17 @@ this.setVisible(false);// TODO add your handling code here:
 
     private void Proceed_LabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Proceed_LabelMousePressed
      mn = mov.getText();
+     int ct;
       try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/msp?autoReconnect=true&useSSL=false","root", "suvimal");
             Statement stmt = con.createStatement();
+            ResultSet rss = stmt.executeQuery("select count(*) as ct from predict where MOVIE_NAME = '"+mn+"';");
+            rss.next();
+            ct = rss.getInt("ct");
             
             
+            if(ct>0)
+            {
             ResultSet rs = stmt.executeQuery("select * from predict where MOVIE_NAME = '"+mn+"';");
             rs.next();
             
@@ -181,7 +187,11 @@ this.setVisible(false);// TODO add your handling code here:
                     movieUpdate.budget.setText(str[4]);
                     movieUpdate.release.setText(str[6]);
                     movieUpdate.genre.setText(str[5]);
-                   
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Specified Movie Name Does Not Exist !!");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(userlogin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {

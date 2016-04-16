@@ -16,6 +16,9 @@ public class reviewOfMovie extends javax.swing.JFrame {
      */
     public reviewOfMovie() {
         initComponents();
+        review_textArea.setEditable(false);
+        review_textArea.setLineWrap(true);
+        review_textArea.setWrapStyleWord(true);
     }
 
     /**
@@ -73,6 +76,8 @@ public class reviewOfMovie extends javax.swing.JFrame {
         });
 
         review_textArea.setColumns(20);
+        review_textArea.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 13)); // NOI18N
+        review_textArea.setForeground(new java.awt.Color(153, 0, 153));
         review_textArea.setRows(5);
         jScrollPane1.setViewportView(review_textArea);
 

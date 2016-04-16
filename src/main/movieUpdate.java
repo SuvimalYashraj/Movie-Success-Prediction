@@ -332,8 +332,18 @@ this.setVisible(false); // TODO add your handling code here:
     private void updateMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMousePressed
         s = rating.getText();
          mn = Jlabel1.getText();
-        Double d1 = Double.valueOf(s);
-        System.out.println(d1);
+         boolean val = s.matches("^[-+]?[0-9]*[.]?[0-9]+$");
+        
+        if(val==false)
+        {
+             JOptionPane.showMessageDialog(null, "Incorrect Rating!!");
+        }
+        else
+        {
+            double d1 = Double.parseDouble(s);
+            if(d1<=10.0)
+            {
+             
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/msp?autoReconnect=true&useSSL=false","root", "suvimal");
             Statement stmt = con.createStatement();
@@ -350,9 +360,13 @@ this.setVisible(false); // TODO add your handling code here:
             Logger.getLogger(userlogin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(userlogin.class.getName()).log(Level.SEVERE, null, ex);
-        }          
+        }    }
+            else
+            {
+              JOptionPane.showMessageDialog(null, "Rating Should be Less Than 10.0!!");  
+            }
         
-        
+       }
       //         // TODO add your handling code here:
     }//GEN-LAST:event_updateMousePressed
 

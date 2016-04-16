@@ -5,6 +5,7 @@
  */
 package main;
 
+import java.lang.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,38 +15,39 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author MAHE
  */
 public class adminLogin extends javax.swing.JFrame {
-    
 
     /**
      * Creates new form adminLogin
      */
     public adminLogin() {
-       
+
         initComponents();
-         rating.setText("0.0");
+        rating.setText("0.0");
         //movieName.setText("");
     }
-String mn = null;
-String actr = null;
-String act = null;
-String dir = null;
-String bud = null;
-String gen = null;
-String mus = null;
-String rel = null;
-int a1,a2,a3,a4;
-int ac1,ac2,ac3,ac4;
-int m1,m2,m3,m4;
-int d1,d2,d3,d4;
-int g1,g2,g3,g4;
-int b1,b2,b3,b4;
-int r1,r2,r3,r4;
-double r;
+    String mn = null;
+    String actr = null;
+    String act = null;
+    String dir = null;
+    String bud = null;
+    String gen = null;
+    String mus = null;
+    String rel = null;
+    int a1, a2, a3, a4;
+    int ac1, ac2, ac3, ac4;
+    int m1, m2, m3, m4;
+    int d1, d2, d3, d4;
+    int g1, g2, g3, g4;
+    int b1, b2, b3, b4;
+    int r1, r2, r3, r4;
+    double r = 0;
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -112,6 +114,12 @@ double r;
         jLabel10.setFont(new java.awt.Font("Perpetua Titling MT", 1, 16)); // NOI18N
         jLabel10.setText("RATING");
 
+        rating.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ratingActionPerformed(evt);
+            }
+        });
+
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/addMovie.jpg"))); // NOI18N
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/update.jpg"))); // NOI18N
@@ -166,14 +174,14 @@ double r;
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2, 2, 2)
                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel13))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -191,7 +199,7 @@ double r;
                                     .addComponent(movieName, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(budget, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -211,9 +219,9 @@ double r;
                                             .addComponent(actor, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(rating, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(17, 17, 17)))))
+                                .addGap(39, 39, 39)
+                                .addComponent(rating)
+                                .addGap(1, 1, 1)))))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,105 +294,217 @@ double r;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel12MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MousePressed
-       update obj = new update();
-       obj.setVisible(true);
-       this.setVisible(false);  // TODO add your handling code here:
+        update obj = new update();
+        obj.setVisible(true);
+        this.setVisible(false);  // TODO add your handling code here:
     }//GEN-LAST:event_jLabel12MousePressed
 
     private void jLabel13MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MousePressed
-       MainPage obj = new MainPage();
+        MainPage obj = new MainPage();
         obj.setVisible(true);
         this.setVisible(false);  // TODO add your handling code here:
     }//GEN-LAST:event_jLabel13MousePressed
-
+    String rat = null;
+    int flag = 0;
     private void jLabel14MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MousePressed
-     mn = movieName.getText();
-     r = Double.parseDouble(rating.getText());
-    boolean movnam = mn.isEmpty();
-     actr = actor.getSelectedItem().toString();
-     act = actress.getSelectedItem().toString();
-     dir = director.getSelectedItem().toString();
-     bud = budget.getSelectedItem().toString();
-     gen = genre.getSelectedItem().toString();
-     rel = release.getSelectedItem().toString();
-     mus = music.getSelectedItem().toString();
-     switch(actr)
-     {case "SHAH RUKH KHAN" : a1=1;a2=a3=a4=0;break;
-     case "SALMAN KHAN" : a1=a2=a4=0;a3=1;break;
-     case "AAMIR KHAN" : a1=a3=a4=0;a2=1;break;
-     case "AKSHAY KUMAR" : a1=a2=a3=0;a4=1;break;
-     }
-     switch(act)
-     {case "KATRINA KAIF" : ac1=1;ac2=ac3=ac4=0;break;
-      case "KAJOL DEVGN" : ac1=ac3=ac4=0;ac2=1;break;
-      case "KAREENA KAPOOR" : ac1=ac2=ac4=0;ac3=1;break;
-      case "PRIYANKA CHOPRA" : ac1=ac2=ac3=0;ac4=1;break;
-     }
-     switch(dir)
-     {case "YASH CHOPRA" : d1=1;d2=d3=d4=0;break;
-      case "RAJ KUMAR HIRANI" : d1=d3=d4=0;d2=1;break;
-      case "IMTIAZ ALI" : d1=d2=d4=0;d3=1;break;
-      case "SANJAY LEELA BHANSALI": d1=d2=d3=0;d4=1;break;
-     }
-     switch(bud)
-     {case "BELOW 50 MILLION" : b1=1;b2=b3=b4=0;break;
-      case "50 - 100 MILLION" : b1=b3=b4=0;b2=1;break;
-      case "100 - 150 MILLION" : b1=b2=b4=0;b3=1;break;
-      case "ABOVE 150 MILLION": b1=b2=b3=0;b4=1;break;
-     }
-     switch(rel)
-     {case "CHRISTMAS" : r1=1;r2=r3=r4=0;break;
-      case "DIWALI" : r1=r3=r4=0;r2=1;break;
-      case "EID" : r1=r2=r4=0;r3=1;break;
-      case "HOLI": r1=r2=r3=0;r4=1;break;
-     }
-     switch(gen)
-     {case "ACTION" : g1=1;g2=g3=g4=0;break;
-      case "ROMANCE" : g1=g3=g4=0;g2=1;break;
-      case "COMEDY" : g1=g2=g4=0;g3=1;break;
-      case "DRAMA": g1=g2=g3=0;g4=1;break;
-     }
-     switch(mus)
-     {case "VISHAL SHEKHAR" : m1=1;m2=m3=m4=0;break;
-      case "PRITAM" : m1=m3=m4=0;m2=1;break;
-      case "AR REHMAN" : m1=m2=m4=0;m3=1;break;
-      case "SHANKAR EHSAN LOY": m1=m2=m3=0;m4=1;break;
-     }
-     Connection conn = null;
-     Statement statement = null;
-     ResultSet resultSet = null;
-         if(!movnam && r!=0.0)
-     {
-            try
-            {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/msp?autoReconnect=true&useSSL=false","root", "suvimal");
-            statement = conn.createStatement();
-            String in = "insert into msp.predict values('"+mn+"',"+a1+","+a2+","+a3+","+a4+","+ac1+","+ac2+","+ac3+","+ac4+","+d1+","+d2+","+d3+","+d4+","+m1+","+m2+","+m3+","+m4+","+b1+","+b2+","+b3+","+b4+","+g1+","+g2+","+g3+","+g4+","+r1+","+r2+","+r3+","+r4+","+r+");";
-            statement.executeUpdate(in);
-            JOptionPane.showMessageDialog(null, " Movie has been Added!!");  
-            
-             if(conn!=null)
-            System.out.println("Connected");
-            }
-            catch(Exception e)
-            {
-            System.out.println("Not connected");
+        mn = movieName.getText();
+        rat = rating.getText();
+//     char[] chars = rat.toCharArray();
+//     boolean ra=true;
+//     for(int i=0;i<rat.length();i++)
+//     { ra = Character.isDigit(rat.charAt(i));
+//         if(!ra)
+//     {
+//         flag=1;
+//         break;
+//     }
+//     }
+        boolean val = rat.matches("^[-+]?[0-9]*[.]?[0-9]+$");
+
+        boolean movnam = mn.isEmpty();
+        actr = actor.getSelectedItem().toString();
+        act = actress.getSelectedItem().toString();
+        dir = director.getSelectedItem().toString();
+        bud = budget.getSelectedItem().toString();
+        gen = genre.getSelectedItem().toString();
+        rel = release.getSelectedItem().toString();
+        mus = music.getSelectedItem().toString();
+        switch (actr) {
+            case "SHAH RUKH KHAN":
+                a1 = 1;
+                a2 = a3 = a4 = 0;
+                break;
+            case "SALMAN KHAN":
+                a1 = a2 = a4 = 0;
+                a3 = 1;
+                break;
+            case "AAMIR KHAN":
+                a1 = a3 = a4 = 0;
+                a2 = 1;
+                break;
+            case "AKSHAY KUMAR":
+                a1 = a2 = a3 = 0;
+                a4 = 1;
+                break;
         }
+        switch (act) {
+            case "KATRINA KAIF":
+                ac1 = 1;
+                ac2 = ac3 = ac4 = 0;
+                break;
+            case "KAJOL DEVGN":
+                ac1 = ac3 = ac4 = 0;
+                ac2 = 1;
+                break;
+            case "KAREENA KAPOOR":
+                ac1 = ac2 = ac4 = 0;
+                ac3 = 1;
+                break;
+            case "PRIYANKA CHOPRA":
+                ac1 = ac2 = ac3 = 0;
+                ac4 = 1;
+                break;
+        }
+        switch (dir) {
+            case "YASH CHOPRA":
+                d1 = 1;
+                d2 = d3 = d4 = 0;
+                break;
+            case "RAJ KUMAR HIRANI":
+                d1 = d3 = d4 = 0;
+                d2 = 1;
+                break;
+            case "IMTIAZ ALI":
+                d1 = d2 = d4 = 0;
+                d3 = 1;
+                break;
+            case "SANJAY LEELA BHANSALI":
+                d1 = d2 = d3 = 0;
+                d4 = 1;
+                break;
+        }
+        switch (bud) {
+            case "BELOW 50 MILLION":
+                b1 = 1;
+                b2 = b3 = b4 = 0;
+                break;
+            case "50 - 100 MILLION":
+                b1 = b3 = b4 = 0;
+                b2 = 1;
+                break;
+            case "100 - 150 MILLION":
+                b1 = b2 = b4 = 0;
+                b3 = 1;
+                break;
+            case "ABOVE 150 MILLION":
+                b1 = b2 = b3 = 0;
+                b4 = 1;
+                break;
+        }
+        switch (rel) {
+            case "CHRISTMAS":
+                r1 = 1;
+                r2 = r3 = r4 = 0;
+                break;
+            case "DIWALI":
+                r1 = r3 = r4 = 0;
+                r2 = 1;
+                break;
+            case "EID":
+                r1 = r2 = r4 = 0;
+                r3 = 1;
+                break;
+            case "HOLI":
+                r1 = r2 = r3 = 0;
+                r4 = 1;
+                break;
+        }
+        switch (gen) {
+            case "ACTION":
+                g1 = 1;
+                g2 = g3 = g4 = 0;
+                break;
+            case "ROMANCE":
+                g1 = g3 = g4 = 0;
+                g2 = 1;
+                break;
+            case "COMEDY":
+                g1 = g2 = g4 = 0;
+                g3 = 1;
+                break;
+            case "DRAMA":
+                g1 = g2 = g3 = 0;
+                g4 = 1;
+                break;
+        }
+        switch (mus) {
+            case "VISHAL SHEKHAR":
+                m1 = 1;
+                m2 = m3 = m4 = 0;
+                break;
+            case "PRITAM":
+                m1 = m3 = m4 = 0;
+                m2 = 1;
+                break;
+            case "AR REHMAN":
+                m1 = m2 = m4 = 0;
+                m3 = 1;
+                break;
+            case "SHANKAR EHSAN LOY":
+                m1 = m2 = m3 = 0;
+                m4 = 1;
+                break;
+        }
+        Connection conn = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+         if (val == false) {
+                JOptionPane.showMessageDialog(null, "Incorrect Rating!!");
+            }
+         else{
+             r = Double.parseDouble(rating.getText());
+             if(r<=10.0)
+             {
+        if (!movnam && r != 0) {
+            
+                
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                    conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/msp?autoReconnect=true&useSSL=false", "root", "suvimal");
+                    statement = conn.createStatement();
+                    String in = "insert into msp.predict values('" + mn + "'," + a1 + "," + a2 + "," + a3 + "," + a4 + "," + ac1 + "," + ac2 + "," + ac3 + "," + ac4 + "," + d1 + "," + d2 + "," + d3 + "," + d4 + "," + m1 + "," + m2 + "," + m3 + "," + m4 + "," + b1 + "," + b2 + "," + b3 + "," + b4 + "," + g1 + "," + g2 + "," + g3 + "," + g4 + "," + r1 + "," + r2 + "," + r3 + "," + r4 + "," + r + ");";
+                    statement.executeUpdate(in);
+                    JOptionPane.showMessageDialog(null, " Movie has been Added!!");
+
+                    if (conn != null) {
+                        System.out.println("Connected");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Not connected");
+                }
+            }
+         else if (movnam && r == 0.0) {
+            JOptionPane.showMessageDialog(null, "Movie Name and Rating Not Specified!!");
+        } else if (movnam) {
+            JOptionPane.showMessageDialog(null, "Movie Name Not Specified!!");
+        } else if (r == 0.0) {
+            JOptionPane.showMessageDialog(null, "Rating is Not Specified!!");
+        }
+      }
+             else
+             {
+                 JOptionPane.showMessageDialog(null, "Rating Should be Less Than 10.0!!");
+             }
      }
-         else
-         {
-             if(movnam)
-                 JOptionPane.showMessageDialog(null, "Movie Name Not Specified!!");
-             else if(r==0.0)
-                 JOptionPane.showMessageDialog(null, "Rating is Not Specified!!");
-                 
-         }
     }//GEN-LAST:event_jLabel14MousePressed
 
     private void actorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_actorActionPerformed
+
+    private void ratingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ratingActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ratingActionPerformed
 
     /**
      * @param args the command line arguments
@@ -413,8 +533,8 @@ double r;
         }
         //</editor-fold>
         Connection conn = null;
-     Statement statement = null;
-     ResultSet resultSet = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -423,7 +543,7 @@ double r;
             }
         });
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> actor;
     private javax.swing.JComboBox<String> actress;
@@ -451,4 +571,3 @@ double r;
     private javax.swing.JComboBox<String> release;
     // End of variables declaration//GEN-END:variables
 }
-

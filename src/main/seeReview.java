@@ -187,6 +187,7 @@ try {
             int i=0;
             reviewOfMovie obj = new reviewOfMovie();
             
+            
             ResultSet rs = stmt.executeQuery("Select review from moviereview where movie = '"+s+"';");
             while(rs.next())
             {
@@ -204,6 +205,7 @@ try {
                 obj.setVisible(true);
             this.setVisible(false);
             }
+            
             //String rev = rs.getString("review");
             //System.out.println(rev);
              //JOptionPane.showMessageDialog(null, "MOVIE NOT PRESENT!!");

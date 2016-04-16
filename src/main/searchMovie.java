@@ -248,18 +248,24 @@ review obj = new review();
     }//GEN-LAST:event_jLabel11MousePressed
 
     private void actressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actressActionPerformed
-b=1;        // TODO add your handling code here:
+     // TODO add your handling code here:
     }//GEN-LAST:event_actressActionPerformed
 
     private void proceedMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_proceedMousePressed
-      actr = actor.getText();
-      act = actress.getText();
-      dir = director.getText();
-      gen = genre.getText();
+      actr = actor.getText().toUpperCase();
+      act = actress.getText().toUpperCase();
+      dir = director.getText().toUpperCase();
+      gen = genre.getText().toUpperCase();
+      boolean b1,b2,b3,b4;
+      b1 = actr.isEmpty();
+      b2 = act.isEmpty();
+      b3 = dir.isEmpty();
+      b4 = gen.isEmpty();
+      int flag=0;
       //System.out.println(actr);
       //System.out.println(act);
-      if(a==1 && b==0 && c==0 && d==0)
-      {//System.out.println(12345);
+      if(!b1 && b2 && b3 && b4)
+      {
           var = "MOVIES OF "+actr;
           switch(actr)
      {
@@ -267,9 +273,11 @@ b=1;        // TODO add your handling code here:
      case "SALMAN KHAN" : s="SALMAN_KHAN";break;
      case "AAMIR KHAN" : s="AAMIR_KHAN";break;
      case "AKSHAY KUMAR" : s="AKSHAY_KUMAR";break;
+     default : s = "suvi";
      }
       }
-     else if(a==0 && b==1 && c==0 && d==0)
+     else if(b1 && !b2 && b3 && b4)
+         
                   {
                       var = "MOVIES OF "+act;
          //System.out.println("12345");
@@ -278,10 +286,10 @@ b=1;        // TODO add your handling code here:
       case "KAJOL DEVGN" : s="KAJOL_DEVGAN";break;
       case "KAREENA KAPOOR" : s="KAREENA_KAPOOR";break;
       case "PRIYANKA CHOPRA" : s="PRIYANKA_CHOPRA";break;
-      
+      default : s = "suvi";
      }
                   }
-     else if(a==0 && b==0 && c==1 && d==0)
+     else if(b1 && b2 && !b3 && b4)
      {
          var = "MOVIES DIRECTED BY "+dir;
          switch(dir)
@@ -289,9 +297,10 @@ b=1;        // TODO add your handling code here:
       case "RAJ KUMAR HIRANI" : s="RAJ_KUMAR_HIRANI";break;
       case "IMTIAZ ALI" : s="IMTIAZ_ALI";break;
       case "SANJAY LEELA BHANSALI": s="SANJAY_LEELA_BHANSALI" ;break;
+      default : s = "suvi";
      }
      } 
-     else if(a==0 && b==0 && c==0 && d==1)
+     else if(b1 && b2 && b3 && !b4)
      {
          var = gen + " MOVIES";
          System.out.println(var);
@@ -300,10 +309,30 @@ b=1;        // TODO add your handling code here:
       case "ROMANCE" : s="ROMANCE";break;
       case "COMEDY" : s="COMEDY";break;
       case "DRAMA": s="DRAMA";break;
+      default : s = "suvi";
      }
      }
-      
-      
+         else if( b1 && b2 && b3 && b4)
+                 {
+                  flag=1;   
+                 JOptionPane.showMessageDialog(null, "No Field Specified!!");
+                 }
+      else
+         {
+             JOptionPane.showMessageDialog(null, "Please Specify Only 1 Field!!");
+             flag=1;
+         }
+         
+     
+      if(flag==0)
+      {
+          if(s.equals("suvi"))
+          {
+              JOptionPane.showMessageDialog(null, "Wrong Input!!"); 
+              
+          }
+          
+          else{
        try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/msp?autoReconnect=true&useSSL=false","root", "suvimal");
             Statement stmt = con.createStatement();
@@ -330,20 +359,24 @@ b=1;        // TODO add your handling code here:
             Logger.getLogger(userlogin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(userlogin.class.getName()).log(Level.SEVERE, null, ex);
-        }          
+        } 
+          }
+         
+          }
+      
         // TODO add your handling code here:
     }//GEN-LAST:event_proceedMousePressed
 
     private void actorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actorActionPerformed
-        a=1;// TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_actorActionPerformed
 
     private void directorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_directorActionPerformed
-c=1;        // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_directorActionPerformed
 
     private void genreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genreActionPerformed
-d=1;        // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_genreActionPerformed
 
     /**

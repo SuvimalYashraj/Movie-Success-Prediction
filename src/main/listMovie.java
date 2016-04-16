@@ -16,6 +16,9 @@ public class listMovie extends javax.swing.JFrame {
      */
     public listMovie() {
         initComponents();
+        List_textarea.setEditable(false);
+        List_textarea.setLineWrap(true);
+        List_textarea.setWrapStyleWord(true);
     }
 
     /**

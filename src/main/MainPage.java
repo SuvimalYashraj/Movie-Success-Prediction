@@ -190,6 +190,11 @@ String pass = null;
     private void jLabel8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MousePressed
 usr = adminID.getText();
     pass = password.getText();
+    int ul = usr.length();
+    int pl = pass.length();
+    
+    if (ul<21 && pl<21)
+    {
         
   try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/msp","root", "suvimal");
@@ -216,7 +221,11 @@ usr = adminID.getText();
         } catch (Exception ex) {
             Logger.getLogger(userlogin.class.getName()).log(Level.SEVERE, null, ex);
         }        
-        
+    }
+    else
+    {
+        JOptionPane.showMessageDialog(null, "Incorrect Username/Password Length!!");
+    }
          // TODO add your handling code here:
     }//GEN-LAST:event_jLabel8MousePressed
 

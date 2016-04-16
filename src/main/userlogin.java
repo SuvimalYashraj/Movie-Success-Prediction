@@ -263,7 +263,12 @@ aboutUs obj = new aboutUs();
     private void jLabel8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MousePressed
         usr = username_tf.getText();
         int a=0;
+        int ul = usr.length();
         pass = password.getText();
+        int pl = pass.length();
+        
+        if(ul<51 && pl<51)
+        {
     try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/msp?autoReconnect=true&useSSL=false","root", "suvimal");
             Statement stmt = con.createStatement();
@@ -293,7 +298,12 @@ aboutUs obj = new aboutUs();
             Logger.getLogger(userlogin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(userlogin.class.getName()).log(Level.SEVERE, null, ex);
-        }   // TODO add your handling code here:
+        }
+        }
+else
+        {
+            JOptionPane.showMessageDialog(null, "Incorrect Username/Password Length!!");
+        }// TODO add your handling code here:
     }//GEN-LAST:event_jLabel8MousePressed
 
     private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
