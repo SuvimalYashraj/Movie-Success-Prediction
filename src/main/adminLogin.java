@@ -25,7 +25,10 @@ public class adminLogin extends javax.swing.JFrame {
      * Creates new form adminLogin
      */
     public adminLogin() {
+       
         initComponents();
+         rating.setText("0.0");
+        //movieName.setText("");
     }
 String mn = null;
 String actr = null;
@@ -297,6 +300,7 @@ double r;
     private void jLabel14MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MousePressed
      mn = movieName.getText();
      r = Double.parseDouble(rating.getText());
+    boolean movnam = mn.isEmpty();
      actr = actor.getSelectedItem().toString();
      act = actress.getSelectedItem().toString();
      dir = director.getSelectedItem().toString();
@@ -349,11 +353,12 @@ double r;
      Connection conn = null;
      Statement statement = null;
      ResultSet resultSet = null;
-        
+         if(!movnam && r!=0.0)
+     {
             try
             {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/msp","root","suvimal");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/msp?autoReconnect=true&useSSL=false","root", "suvimal");
             statement = conn.createStatement();
             String in = "insert into msp.predict values('"+mn+"',"+a1+","+a2+","+a3+","+a4+","+ac1+","+ac2+","+ac3+","+ac4+","+d1+","+d2+","+d3+","+d4+","+m1+","+m2+","+m3+","+m4+","+b1+","+b2+","+b3+","+b4+","+g1+","+g2+","+g3+","+g4+","+r1+","+r2+","+r3+","+r4+","+r+");";
             statement.executeUpdate(in);
@@ -365,7 +370,16 @@ double r;
             catch(Exception e)
             {
             System.out.println("Not connected");
-        } 
+        }
+     }
+         else
+         {
+             if(movnam)
+                 JOptionPane.showMessageDialog(null, "Movie Name Not Specified!!");
+             else if(r==0.0)
+                 JOptionPane.showMessageDialog(null, "Rating is Not Specified!!");
+                 
+         }
     }//GEN-LAST:event_jLabel14MousePressed
 
     private void actorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actorActionPerformed
